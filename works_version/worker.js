@@ -51,6 +51,14 @@ const HTML_CONTENT = `
             <div class="w-1/2 bg-white rounded-lg shadow-lg p-6">
                 <h2 class="text-xl font-bold mb-2">响应结果:</h2>
                 <pre id="response" class="bg-gray-100 p-4 rounded overflow-auto max-h-[calc(50vh-150px)]"></pre>
+                <div class="flex gap-2 mt-2">
+                    <button id="toggleFullResponse" class="text-blue-500 hover:text-blue-700 hidden">
+                        显示完整响应
+                    </button>
+                    <button id="toggleMessageResponse" class="text-blue-500 hover:text-blue-700 hidden">
+                        仅显示消息内容
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -238,6 +246,45 @@ const HTML_CONTENT = `
         // 页面加载时显示默认示例
         updateExamples('max_tokens');
 
+        let fullResponseData = null;
+
+        function displayResponse(data, displayType = 'message') {
+            const responseElement = document.getElementById('response');
+            const fullButton = document.getElementById('toggleFullResponse');
+            const messageButton = document.getElementById('toggleMessageResponse');
+            
+            if (!data) return;
+            
+            fullResponseData = data;
+            
+            if (displayType === 'message' && data.choices && data.choices[0].message) {
+                // 显示message部分
+                responseElement.textContent = JSON.stringify(data.choices[0].message, null, 2);
+                fullButton.classList.remove('hidden');
+                messageButton.classList.add('hidden');
+            } else {
+                // 显示完整响应
+                responseElement.textContent = JSON.stringify(data, null, 2);
+                if (data.choices && data.choices[0].message) {
+                    messageButton.classList.remove('hidden');
+                    fullButton.classList.add('hidden');
+                } else {
+                    messageButton.classList.add('hidden');
+                    fullButton.classList.add('hidden');
+                }
+            }
+        }
+
+        // 添加切换按钮事件监听
+        document.getElementById('toggleFullResponse').addEventListener('click', () => {
+            displayResponse(fullResponseData, 'full');
+        });
+
+        document.getElementById('toggleMessageResponse').addEventListener('click', () => {
+            displayResponse(fullResponseData, 'message');
+        });
+
+        // 修改表单提交处理中的响应显示部分
         document.getElementById('apiForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -263,9 +310,11 @@ const HTML_CONTENT = `
                 });
                 
                 const data = await response.json();
-                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+                displayResponse(data);
             } catch (error) {
                 document.getElementById('response').textContent = 'Error: ' + error.message;
+                document.getElementById('toggleFullResponse').classList.add('hidden');
+                document.getElementById('toggleMessageResponse').classList.add('hidden');
             }
         });
     </script>
