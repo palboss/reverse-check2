@@ -32,6 +32,15 @@
               </select>
             </div>
 
+            <!-- 参数检测说明 -->
+            <div v-if="currentDescription" class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+              <h3 class="font-bold text-blue-800 mb-2">{{ currentDescription.title }}</h3>
+              <p class="text-blue-700 mb-2">{{ currentDescription.description }}</p>
+              <ul class="list-disc list-inside text-blue-600 space-y-1">
+                <li v-for="point in currentDescription.focus_points" :key="point">{{ point }}</li>
+              </ul>
+            </div>
+
             <div>
               <label class="block mb-1">{{ t('message.model') }}</label>
               <input 
@@ -135,6 +144,7 @@ import { reactive, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import examplesData from '../data/examples.json'
 import promptsData from '../data/prompts.json'
+import descriptionsData from '../data/descriptions.json'
 
 const { t } = useI18n()
 const loading = ref(false)
@@ -153,6 +163,11 @@ const viewState = reactive({
   result: 'brief',
   reverse: 'brief',
   official: 'brief'
+})
+
+// 当前参数的检测说明
+const currentDescription = computed(() => {
+  return descriptionsData[formState.provider]?.[formState.testParam]
 })
 
 // 定义各提供商的可用参数

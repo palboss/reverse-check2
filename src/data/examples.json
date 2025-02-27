@@ -259,6 +259,103 @@
         "service_tier": "default",
         "system_fingerprint": "fp_4dd9e4e381"
     }
+    },
+    "image_url": {
+      "reverse": {
+        "error": {
+          "message": "Image input is not supported",
+          "type": "invalid_request_error",
+          "param": "image_url",
+          "code": null
+        }
+      },
+      "official": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": 1677652288,
+        "model": "gpt-4-vision-preview",
+        "choices": [{
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "I see an image of a beautiful sunset over the ocean."
+          },
+          "finish_reason": "stop"
+        }],
+        "usage": {
+          "prompt_tokens": 50,
+          "completion_tokens": 15,
+          "total_tokens": 65
+        }
+      }
+    },
+    "stream": {
+      "reverse": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion.chunk",
+        "created": 1677652288,
+        "choices": [{
+          "index": 0,
+          "delta": {
+            "content": "Once upon a time"
+          },
+          "finish_reason": null
+        }]
+      },
+      "official": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion.chunk",
+        "created": 1677652288,
+        "model": "gpt-4",
+        "choices": [{
+          "index": 0,
+          "delta": {
+            "content": "Once upon a time"
+          },
+          "finish_reason": null
+        }]
+      }
+    },
+    "tool_function": {
+      "reverse": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": 1677652288,
+        "choices": [{
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": null,
+            "function_call": {
+              "name": "get_weather",
+              "arguments": "{\"location\":\"London\"}"
+            }
+          }
+        }]
+      },
+      "official": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": 1677652288,
+        "model": "gpt-4",
+        "choices": [{
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": null,
+            "function_call": {
+              "name": "get_weather",
+              "arguments": "{\"location\":\"London\"}"
+            }
+          },
+          "finish_reason": "function_call"
+        }],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 15,
+          "total_tokens": 35
+        }
+      }
     }
   },
   "claude": {

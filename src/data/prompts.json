@@ -1,15 +1,16 @@
 {
   "openai": {
     "max_tokens": {
-      "content": "repeat 'deepseek number 1' 5 times",
+      "content": "输出 'deepseek number 1' 5次",
       "params": {
         "max_tokens": 10
       }
     },
     "logprobs": {
-      "content": "Please analyze the sentiment of the following text: 'I love coding!'",
+      "content": "Hello!",
       "params": {
-        "logprobs": true
+        "logprobs": true,
+        "top_logprobs": 2
       }
     },
     "n": {
