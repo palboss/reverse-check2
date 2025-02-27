@@ -28,10 +28,15 @@ const i18n = createI18n({
         testParams: '检测参数',
         apiBaseUrl: 'API Base URL',
         apiKey: 'API Key',
+        apiKeyPlaceholder: '请输入您的API密钥',
+        apiBaseUrlPlaceholder: '例如：api.openai.com（无需添加https://或/v1）',
         model: '待检测模型',
+        modelPlaceholder: '例如：gpt-4o-2024-11-20, gpt-3.5-turbo',
         reverseExample: '逆向接口返回示例',
         officialExample: '官方接口返回示例',
-        requestResult: '请求结果'
+        requestResult: '请求结果',
+        showBriefResponse: '显示简要响应',
+        showFullResponse: '显示完整响应'
       }
     }
   }

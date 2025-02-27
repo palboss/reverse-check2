@@ -1,9 +1,9 @@
 {
   "openai": {
     "max_tokens": {
-      "content": "repeat 'deepseek number 1' 20 times",
+      "content": "repeat 'deepseek number 1' 5 times",
       "params": {
-        "max_tokens": 9
+        "max_tokens": 10
       }
     },
     "logprobs": {
@@ -13,7 +13,7 @@
       }
     },
     "n": {
-      "content": "Generate two different creative names for a tech startup",
+      "content": "Hello!",
       "params": {
         "n": 2
       }
@@ -21,7 +21,7 @@
     "stop": {
       "content": "Count from 1 to 10",
       "params": {
-        "stop": ["stop"]
+        "stop": ["4"]
       }
     },
     "tool_choice": {

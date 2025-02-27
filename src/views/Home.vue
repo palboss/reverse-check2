@@ -1,98 +1,131 @@
 <template>
   <div class="container mx-auto px-4 py-8">
-    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-      <h1 class="text-2xl font-bold mb-6 text-center">{{ t('message.title') }}</h1>
-      
-      <!-- 配置表单 -->
-      <form @submit.prevent="handleCheck" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block mb-1">{{ t('message.modelProvider') }}</label>
-            <select 
-              v-model="formState.provider" 
-              @change="handleProviderChange"
-              class="w-full border p-2 rounded">
-              <option value="openai">OpenAI</option>
-              <option value="claude">Claude</option>
-              <option value="gemini">Gemini</option>
-            </select>
-          </div>
-          
-          <div>
-            <label class="block mb-1">{{ t('message.testParams') }}</label>
-            <select 
-              v-model="formState.testParam" 
-              @change="handleParamChange"
-              class="w-full border p-2 rounded">
-              <option v-for="param in availableParams" :key="param.value" :value="param.value">
-                {{ param.label }}
-              </option>
-            </select>
-          </div>
-        </div>
+    <h1 class="text-2xl font-bold mb-6 text-center">{{ t('message.title') }}</h1>
+    
+    <!-- 上半部分：参数配置和响应结果 -->
+    <div class="flex gap-6 mb-6">
+      <!-- 左侧：配置表单 -->
+      <div class="w-1/2 bg-white rounded-lg shadow-lg p-6">
+        <form @submit.prevent="handleCheck" class="space-y-4">
+          <div class="space-y-4">
+            <div>
+              <label class="block mb-1">{{ t('message.modelProvider') }}</label>
+              <select 
+                v-model="formState.provider" 
+                @change="handleProviderChange"
+                class="w-full border p-2 rounded">
+                <option value="openai">OpenAI</option>
+                <option value="claude">Claude</option>
+                <option value="gemini">Gemini</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block mb-1">{{ t('message.testParams') }}</label>
+              <select 
+                v-model="formState.testParam" 
+                @change="handleParamChange"
+                class="w-full border p-2 rounded">
+                <option v-for="param in availableParams" :key="param.value" :value="param.value">
+                  {{ param.label }}
+                </option>
+              </select>
+            </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block mb-1">{{ t('message.apiBaseUrl') }}</label>
-            <input 
-              type="text" 
-              v-model="formState.baseUrl" 
-              placeholder="例如：api.openai.com"
-              class="w-full border p-2 rounded"
-            />
-          </div>
-          
-          <div>
-            <label class="block mb-1">{{ t('message.apiKey') }}</label>
-            <input 
-              type="password" 
-              v-model="formState.apiKey"
-              class="w-full border p-2 rounded"
-            />
-          </div>
-        </div>
+            <div>
+              <label class="block mb-1">{{ t('message.model') }}</label>
+              <input 
+                type="text" 
+                v-model="formState.model" 
+                class="w-full border p-2 rounded"
+                :placeholder="t('message.modelPlaceholder')" />
+            </div>
 
-        <div>
-          <label class="block mb-1">{{ t('message.model') }}</label>
-          <input 
-            type="text" 
-            v-model="formState.model" 
-            placeholder="例如：gpt-4o-2024-11-20"
-            class="w-full border p-2 rounded"
-          />
-        </div>
+            <div>
+              <label class="block mb-1">{{ t('message.apiBaseUrl') }}</label>
+              <input 
+                type="text" 
+                v-model="formState.baseUrl" 
+                class="w-full border p-2 rounded"
+                :placeholder="t('message.apiBaseUrlPlaceholder')" />
+            </div>
 
-        <div class="text-center">
-          <button 
-            type="submit" 
-            :disabled="loading"
-            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full disabled:opacity-50 disabled:cursor-not-allowed">
-            <svg v-if="loading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            {{ t('message.startCheck') }}
-          </button>
+            <div>
+              <label class="block mb-1">{{ t('message.apiKey') }}</label>
+              <input 
+                type="password" 
+                v-model="formState.apiKey" 
+                class="w-full border p-2 rounded"
+                :placeholder="t('message.apiKeyPlaceholder')" />
+            </div>
+
+            <div class="text-center">
+              <button 
+                type="submit" 
+                class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+                :disabled="loading">
+                {{ t('message.startCheck') }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- 右侧：检测结果 -->
+      <div class="w-1/2 bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-bold mb-2">{{ t('message.requestResult') }}</h2>
+        <div v-if="result" class="h-[calc(100%-2rem)] overflow-auto">
+          <pre class="bg-gray-100 p-4 rounded">{{ displayResult }}</pre>
+          <div class="flex gap-2 mt-2">
+            <button 
+              @click="toggleResultView('full')"
+              class="text-blue-500 hover:text-blue-700 text-sm">
+              {{ t('message.showFullResponse') }}
+            </button>
+            <button 
+              @click="toggleResultView('brief')"
+              class="text-blue-500 hover:text-blue-700 text-sm">
+              {{ t('message.showBriefResponse') }}
+            </button>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
 
-    <!-- 示例对比区域 -->
-    <div class="flex gap-6 mb-6">
+    <!-- 下半部分：示例对比 -->
+    <div class="flex gap-6">
       <div class="w-1/2 bg-white rounded-lg shadow-lg p-6">
         <h2 class="text-xl font-bold mb-2">{{ t('message.reverseExample') }}</h2>
-        <pre class="bg-gray-100 p-4 rounded overflow-auto max-h-[calc(40vh-100px)]">{{ JSON.stringify(currentReverseExample, null, 2) }}</pre>
+        <pre class="bg-gray-100 p-4 rounded overflow-auto max-h-[40vh]">{{ displayReverseExample }}</pre>
+        <div class="flex gap-2 mt-2">
+          <button 
+            @click="toggleReverseView('full')"
+            class="text-blue-500 hover:text-blue-700 text-sm">
+            {{ t('message.showFullResponse') }}
+          </button>
+          <button 
+            @click="toggleReverseView('brief')"
+            class="text-blue-500 hover:text-blue-700 text-sm">
+            {{ t('message.showBriefResponse') }}
+          </button>
+        </div>
       </div>
       <div class="w-1/2 bg-white rounded-lg shadow-lg p-6">
         <h2 class="text-xl font-bold mb-2">{{ t('message.officialExample') }}</h2>
-        <pre class="bg-gray-100 p-4 rounded overflow-auto max-h-[calc(40vh-100px)]">{{ JSON.stringify(currentOfficialExample, null, 2) }}</pre>
+        <pre class="bg-gray-100 p-4 rounded overflow-auto max-h-[40vh]">{{ displayOfficialExample }}</pre>
+        <div class="flex gap-2 mt-2">
+          <button 
+            @click="toggleOfficialView('full')"
+            class="text-blue-500 hover:text-blue-700 text-sm">
+            {{ t('message.showFullResponse') }}
+          </button>
+          <button 
+            @click="toggleOfficialView('brief')"
+            class="text-blue-500 hover:text-blue-700 text-sm">
+            {{ t('message.showBriefResponse') }}
+          </button>
+        </div>
       </div>
-    </div>
-
-    <!-- 检测结果区域 -->
-    <div v-if="result" class="bg-white rounded-lg shadow-lg p-6">
-      <h2 class="text-xl font-bold mb-2">{{ t('message.requestResult') }}</h2>
-      <pre class="bg-gray-100 p-4 rounded overflow-auto max-h-[calc(50vh-150px)]">{{ JSON.stringify(result, null, 2) }}</pre>
     </div>
   </div>
 </template>
@@ -101,6 +134,7 @@
 import { reactive, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import examplesData from '../data/examples.json'
+import promptsData from '../data/prompts.json'
 
 const { t } = useI18n()
 const loading = ref(false)
@@ -109,9 +143,16 @@ const result = ref(null)
 const formState = reactive({
   provider: 'openai',
   testParam: 'max_tokens',
+  model: '',
   baseUrl: '',
   apiKey: '',
-  model: ''
+})
+
+// 视图状态
+const viewState = reactive({
+  result: 'brief',
+  reverse: 'brief',
+  official: 'brief'
 })
 
 // 定义各提供商的可用参数
@@ -144,22 +185,41 @@ const availableParams = computed(() => {
   return providerParams[formState.provider] || []
 })
 
-// 计算当前的示例数据
-const currentReverseExample = computed(() => {
-  return examplesData[formState.provider]?.[formState.testParam]?.reverse || {}
+// 显示处理函数
+const formatResponse = (data, type) => {
+  if (!data) return ''
+  return type === 'brief' && data.choices
+    ? JSON.stringify(data.choices, null, 2)
+    : JSON.stringify(data, null, 2)
+}
+
+// 计算属性：显示结果
+const displayResult = computed(() => {
+  return formatResponse(result.value, viewState.result)
 })
 
-const currentOfficialExample = computed(() => {
-  return examplesData[formState.provider]?.[formState.testParam]?.official || {}
+const displayReverseExample = computed(() => {
+  const data = examplesData[formState.provider]?.[formState.testParam]?.reverse
+  return formatResponse(data, viewState.reverse)
 })
+
+const displayOfficialExample = computed(() => {
+  const data = examplesData[formState.provider]?.[formState.testParam]?.official
+  return formatResponse(data, viewState.official)
+})
+
+// 切换视图函数
+const toggleResultView = (type) => viewState.result = type
+const toggleReverseView = (type) => viewState.reverse = type
+const toggleOfficialView = (type) => viewState.official = type
 
 // 处理提供商变化
-const handleProviderChange = (value) => {
+const handleProviderChange = () => {
   formState.testParam = availableParams.value[0]?.value || ''
 }
 
 // 处理参数变化
-const handleParamChange = (value) => {
+const handleParamChange = () => {
   // 更新示例显示
 }
 

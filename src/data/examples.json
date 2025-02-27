@@ -2,37 +2,74 @@
   "openai": {
     "max_tokens": {
       "reverse": {
-        "id": "chatcmpl-123",
+        "id": "chatcmpl-R4RuSa9n7fPmJIpRlGvxFG5ryt122",
         "object": "chat.completion",
-        "created": 1677652288,
-        "choices": [{
-          "index": 0,
-          "message": {
-            "role": "assistant",
-            "content": "not r"
-          }
-        }],
-        "system_fingerprint": "fp_44709"
-      },
-      "official": {
-        "id": "chatcmpl-123",
-        "object": "chat.completion",
-        "created": 1677652288,
-        "model": "gpt-3.5-turbo-0613",
-        "choices": [{
-          "index": 0,
-          "message": {
-            "role": "assistant",
-            "content": "not r"
-          },
-          "finish_reason": "length"
-        }],
+        "created": 1740680216,
+        "model": "gpt-4o-2024-11-20",
+        "choices": [
+            {
+                "index": 0,
+                "message": {
+                    "role": "assistant",
+                    "content": "```plaintext\ndeepseek number 1\ndeepseek number 1\ndeepseek number 1\ndeepseek number 1\ndeepseek number 1\n```",
+                    "refusal": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+            }
+        ],
         "usage": {
-          "prompt_tokens": 9,
-          "completion_tokens": 2,
-          "total_tokens": 11
-        }
-      }
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+            "prompt_tokens_details": {
+                "cached_tokens": 0,
+                "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+                "reasoning_tokens": 0,
+                "audio_tokens": 0,
+                "accepted_prediction_tokens": 0,
+                "rejected_prediction_tokens": 0
+            }
+        },
+        "system_fingerprint": "fp_8639f4b2c0"
+    },
+      "official": {
+        "id": "chatcmpl-B5ciMnnnBD4JOKqlxqbV6Ju4mw3nn",
+        "object": "chat.completion",
+        "created": 1740680158,
+        "model": "gpt-4o-2024-11-20",
+        "choices": [
+            {
+                "index": 0,
+                "message": {
+                    "role": "assistant",
+                    "content": "Sure! Here is the line repeated 5 times",
+                    "refusal": null
+                },
+                "logprobs": null,
+                "finish_reason": "length"
+            }
+        ],
+        "usage": {
+            "prompt_tokens": 18,
+            "completion_tokens": 10,
+            "total_tokens": 28,
+            "prompt_tokens_details": {
+                "cached_tokens": 0,
+                "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+                "reasoning_tokens": 0,
+                "audio_tokens": 0,
+                "accepted_prediction_tokens": 0,
+                "rejected_prediction_tokens": 0
+            }
+        },
+        "service_tier": "default",
+        "system_fingerprint": "fp_178d5ba2c0"
+    }
     },
     "logprobs": {
       "reverse": {
@@ -141,6 +178,87 @@
           "total_tokens": 25
         }
       }
+    },
+    "n": {
+      "reverse": {
+        "id": "chatcmpl-SRRSjviQNd1eCUHHQWbN4rumeX3ct",
+        "object": "chat.completion",
+        "created": 1740679079,
+        "model": "gpt-4o-2024-11-20",
+        "choices": [
+            {
+                "index": 0,
+                "message": {
+                    "role": "assistant",
+                    "content": "Got it! How can I assist you today? 😊",
+                    "refusal": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+            }
+        ],
+        "usage": {
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+            "prompt_tokens_details": {
+                "cached_tokens": 0,
+                "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+                "reasoning_tokens": 0,
+                "audio_tokens": 0,
+                "accepted_prediction_tokens": 0,
+                "rejected_prediction_tokens": 0
+            }
+        },
+        "system_fingerprint": "fp_45b1fb6a83"
+    },
+      "official": {
+        "id": "chatcmpl-B5cPnUjHj3f0s39DpKbu0xHA7ZCmS",
+        "object": "chat.completion",
+        "created": 1740679007,
+        "model": "gpt-4o-2024-11-20",
+        "choices": [
+            {
+                "index": 0,
+                "message": {
+                    "role": "assistant",
+                    "content": "Hello! 😊 How can I assist you today?",
+                    "refusal": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+            },
+            {
+                "index": 1,
+                "message": {
+                    "role": "assistant",
+                    "content": "Hi there! How can I assist you today? 😊",
+                    "refusal": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+            }
+        ],
+        "usage": {
+            "prompt_tokens": 9,
+            "completion_tokens": 23,
+            "total_tokens": 32,
+            "prompt_tokens_details": {
+                "cached_tokens": 0,
+                "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+                "reasoning_tokens": 0,
+                "audio_tokens": 0,
+                "accepted_prediction_tokens": 0,
+                "rejected_prediction_tokens": 0
+            }
+        },
+        "service_tier": "default",
+        "system_fingerprint": "fp_4dd9e4e381"
+    }
     }
   },
   "claude": {
