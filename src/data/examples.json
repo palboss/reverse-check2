@@ -11,7 +11,7 @@
                 "index": 0,
                 "message": {
                     "role": "assistant",
-                    "content": "```plaintext\ndeepseek number 1\ndeepseek number 1\ndeepseek number 1\ndeepseek number 1\ndeepseek number 1\n```",
+                    "content": "```好的，\ndeepseek number 1\ndeepseek number 1\ndeepseek number 1\ndeepseek number 1\ndeepseek number 1\n```",
                     "refusal": null
                 },
                 "logprobs": null,
@@ -45,7 +45,7 @@
                 "index": 0,
                 "message": {
                     "role": "assistant",
-                    "content": "Sure! Here is the line repeated 5 times",
+                    "content": "好的，以下是输出 `'deepseek number ",
                     "refusal": null
                 },
                 "logprobs": null,
