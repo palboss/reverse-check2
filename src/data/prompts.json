@@ -1,0 +1,103 @@
+{
+  "openai": {
+    "max_tokens": {
+      "content": "repeat 'deepseek number 1' 20 times",
+      "params": {
+        "max_tokens": 9
+      }
+    },
+    "logprobs": {
+      "content": "Please analyze the sentiment of the following text: 'I love coding!'",
+      "params": {
+        "logprobs": true
+      }
+    },
+    "n": {
+      "content": "Generate two different creative names for a tech startup",
+      "params": {
+        "n": 2
+      }
+    },
+    "stop": {
+      "content": "Count from 1 to 10",
+      "params": {
+        "stop": ["stop"]
+      }
+    },
+    "tool_choice": {
+      "content": "What's the weather like in New York?",
+      "params": {
+        "tool_choice": "auto",
+        "tools": [{
+          "type": "function",
+          "function": {
+            "name": "get_weather",
+            "description": "Get the current weather in a given location",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "location": {
+                  "type": "string",
+                  "description": "The city and state"
+                }
+              },
+              "required": ["location"]
+            }
+          }
+        }]
+      }
+    },
+    "response_format": {
+      "content": "Generate a JSON object with name and age properties",
+      "params": {
+        "response_format": { "type": "json_object" }
+      }
+    },
+    "stream": {
+      "content": "Tell me a story about a brave knight",
+      "params": {
+        "stream": true
+      }
+    }
+  },
+  "claude": {
+    "max_tokens": {
+      "content": "Write a short poem about artificial intelligence",
+      "params": {
+        "max_tokens": 50
+      }
+    },
+    "stop": {
+      "content": "List the planets in our solar system",
+      "params": {
+        "stop": ["stop"]
+      }
+    },
+    "tool_choice": {
+      "content": "Calculate 15% of 85",
+      "params": {
+        "tool_choice": "auto"
+      }
+    }
+  },
+  "gemini": {
+    "max_tokens": {
+      "content": "Explain quantum computing in simple terms",
+      "params": {
+        "max_tokens": 100
+      }
+    },
+    "codeExecution": {
+      "content": "Write a Python function to calculate factorial",
+      "params": {
+        "code_execution": true
+      }
+    },
+    "response_format": {
+      "content": "Create a JSON array of three favorite colors",
+      "params": {
+        "response_format": { "type": "json_object" }
+      }
+    }
+  }
+}

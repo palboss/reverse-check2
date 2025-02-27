@@ -1,0 +1,321 @@
+{
+  "openai": {
+    "max_tokens": {
+      "reverse": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": 1677652288,
+        "choices": [{
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "not r"
+          }
+        }],
+        "system_fingerprint": "fp_44709"
+      },
+      "official": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": 1677652288,
+        "model": "gpt-3.5-turbo-0613",
+        "choices": [{
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "not r"
+          },
+          "finish_reason": "length"
+        }],
+        "usage": {
+          "prompt_tokens": 9,
+          "completion_tokens": 2,
+          "total_tokens": 11
+        }
+      }
+    },
+    "logprobs": {
+      "reverse": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": 1677652288,
+        "choices": [{
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "Hello"
+          },
+          "logprobs": {
+            "token_logprobs": [-0.1, -0.2],
+            "tokens": ["Hello", "!"]
+          }
+        }]
+      },
+      "official": {
+        "error": {
+          "message": "logprobs is not a valid parameter for chat completions",
+          "type": "invalid_request_error",
+          "param": "logprobs",
+          "code": null
+        }
+      }
+    },
+    "tool_choice": {
+      "reverse": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": 1677652288,
+        "choices": [{
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [{
+              "id": "call_123",
+              "type": "function",
+              "function": {
+                "name": "get_weather",
+                "arguments": "{\"location\":\"London\"}"
+              }
+            }]
+          }
+        }]
+      },
+      "official": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": 1677652288,
+        "model": "gpt-4-0613",
+        "choices": [{
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [{
+              "id": "call_123",
+              "type": "function",
+              "function": {
+                "name": "get_weather",
+                "arguments": "{\"location\":\"London\"}"
+              }
+            }]
+          },
+          "finish_reason": "tool_calls"
+        }],
+        "usage": {
+          "prompt_tokens": 12,
+          "completion_tokens": 8,
+          "total_tokens": 20
+        }
+      }
+    },
+    "response_format": {
+      "reverse": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": 1677652288,
+        "choices": [{
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"weather\":\"sunny\",\"temperature\":25}"
+          }
+        }]
+      },
+      "official": {
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": 1677652288,
+        "model": "gpt-4-1106-preview",
+        "choices": [{
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"weather\":\"sunny\",\"temperature\":25}"
+          },
+          "finish_reason": "stop"
+        }],
+        "usage": {
+          "prompt_tokens": 10,
+          "completion_tokens": 15,
+          "total_tokens": 25
+        }
+      }
+    }
+  },
+  "claude": {
+    "max_tokens": {
+      "reverse": {
+        "content": [{
+          "text": "Limited response due to max_tokens=10"
+        }],
+        "model": "claude-2",
+        "stop_reason": "max_tokens",
+        "stop": null
+      },
+      "official": {
+        "content": [{
+          "text": "Limited response due to max_tokens=10"
+        }],
+        "model": "claude-2",
+        "stop_reason": "max_tokens",
+        "stop": null,
+        "usage": {
+          "input_tokens": 5,
+          "output_tokens": 10
+        }
+      }
+    },
+    "stop": {
+      "reverse": {
+        "content": [{
+          "text": "Response stopped at specified sequence"
+        }],
+        "model": "claude-2",
+        "stop_reason": "stop_sequence",
+        "stop": "STOP"
+      },
+      "official": {
+        "content": [{
+          "text": "Response stopped at specified sequence"
+        }],
+        "model": "claude-2",
+        "stop_reason": "stop_sequence",
+        "stop": "STOP",
+        "usage": {
+          "input_tokens": 8,
+          "output_tokens": 12
+        }
+      }
+    },
+    "tool_choice": {
+      "reverse": {
+        "content": [{
+          "text": null,
+          "tool_calls": [{
+            "id": "call_123",
+            "type": "function",
+            "function": {
+              "name": "get_weather",
+              "arguments": "{\"location\":\"London\"}"
+            }
+          }]
+        }],
+        "model": "claude-2",
+        "stop_reason": "end_turn"
+      },
+      "official": {
+        "content": [{
+          "text": null,
+          "tool_calls": [{
+            "id": "call_123",
+            "type": "function",
+            "function": {
+              "name": "get_weather",
+              "arguments": "{\"location\":\"London\"}"
+            }
+          }]
+        }],
+        "model": "claude-2",
+        "stop_reason": "end_turn",
+        "usage": {
+          "input_tokens": 15,
+          "output_tokens": 20
+        }
+      }
+    }
+  },
+  "gemini": {
+    "max_tokens": {
+      "reverse": {
+        "candidates": [{
+          "content": {
+            "parts": [{
+              "text": "Limited by max_tokens"
+            }]
+          },
+          "finishReason": "MAX_TOKENS",
+          "safetyRatings": []
+        }],
+        "promptFeedback": {
+          "safetyRatings": []
+        }
+      },
+      "official": {
+        "candidates": [{
+          "content": {
+            "parts": [{
+              "text": "Limited by max_tokens"
+            }]
+          },
+          "finishReason": "MAX_TOKENS",
+          "safetyRatings": []
+        }],
+        "promptFeedback": {
+          "safetyRatings": []
+        },
+        "usage": {
+          "promptTokenCount": 10,
+          "candidatesTokenCount": 5,
+          "totalTokenCount": 15
+        }
+      }
+    },
+    "codeExecution": {
+      "reverse": {
+        "candidates": [{
+          "content": {
+            "parts": [{
+              "text": "print(\"Hello, World!\")"
+            }]
+          },
+          "safetyRatings": []
+        }],
+        "promptFeedback": {
+          "safetyRatings": []
+        }
+      },
+      "official": {
+        "error": {
+          "message": "Code execution is not supported in this model",
+          "code": "invalid_request"
+        }
+      }
+    },
+    "response_format": {
+      "reverse": {
+        "candidates": [{
+          "content": {
+            "parts": [{
+              "text": "{\"result\": \"structured response\"}"
+            }]
+          },
+          "finishReason": "STOP",
+          "safetyRatings": []
+        }],
+        "promptFeedback": {
+          "safetyRatings": []
+        }
+      },
+      "official": {
+        "candidates": [{
+          "content": {
+            "parts": [{
+              "text": "{\"result\": \"structured response\"}"
+            }]
+          },
+          "finishReason": "STOP",
+          "safetyRatings": []
+        }],
+        "promptFeedback": {
+          "safetyRatings": []
+        },
+        "usage": {
+          "promptTokenCount": 8,
+          "candidatesTokenCount": 12,
+          "totalTokenCount": 20
+        }
+      }
+    }
+  }
+}
