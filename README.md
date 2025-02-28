@@ -1,96 +1,95 @@
-# 模型逆向检测工具
+# LLM API Reverse Engineering Detection Tool
 
-一个用于检测和对比大语言模型API是否为逆向实现的工具，支持OpenAI、Claude和Gemini等主流模型。
+A tool for detecting and comparing whether Large Language Model APIs are reverse-engineered implementations, supporting major models like OpenAI, Claude, and Gemini.
 
-## 功能特性
+## Features
 
-- 🔍 支持多种模型提供商的API检测
+- 🔍 Multi-Provider API Detection
   - OpenAI
   - Claude
   - Gemini
 
-- 🛠 丰富的参数测试选项
-  - max_tokens参数检测
-  - logprobs参数检测
-  - n参数检测
-  - stop参数检测
-  - function_call/tools参数检测
-  - response_format参数检测
-  - 图像输入检测
+- 🛠 Comprehensive Parameter Testing
+  - max_tokens parameter validation
+  - logprobs parameter testing
+  - n parameter verification
+  - stop sequence testing
+  - function_call/tools parameter validation
+  - response_format parameter testing
+  - image input support testing
 
-- 📊 直观的结果展示
-  - API请求信息实时展示
-  - 响应结果对比分析
-  - 官方示例参考
-  - 简洁/完整响应切换
+- 📊 Intuitive Results Display
+  - Real-time API request information
+  - Response comparison analysis
+  - Official examples reference
+  - Toggle between concise/complete responses
 
-## 技术栈
+## Tech Stack
 
-- 前端框架：Vue 3
-- UI组件：Tailwind CSS
-- 构建工具：Vite
-- 国际化：Vue I18n
+- Frontend Framework: Vue 3
+- UI Components: Tailwind CSS
+- Build Tool: Vite
+- Internationalization: Vue I18n
 
-## 快速开始
+## Quick Start
 
-### 安装依赖
+### Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 开发环境运行
+### Run Development Server
 
 ```bash
 npm run dev
 ```
 
-### 生产环境构建
+### Build for Production
 
 ```bash
 npm run build
 ```
 
-## 使用说明
+## Usage Guide
 
-1. 选择模型提供商（OpenAI/Claude/Gemini）
-2. 选择要测试的参数类型
-3. 填写API配置信息
+1. Select a model provider (OpenAI/Claude/Gemini)
+2. Choose parameter types to test
+3. Configure API settings
    - API Base URL
    - API Key
-   - 模型名称
-4. 点击「开始检测」按钮
-5. 查看检测结果和对比信息
+   - Model name
+4. Click "Start Detection" button
+5. Review test results and comparison data
 
-## 参数说明
+## Parameter Details
 
 ### OpenAI
-- max_tokens：控制生成文本的最大长度
-- logprobs：获取token的概率信息
-- n：生成多个候选回复
-- stop：设置停止生成的条件
-- function_call：函数调用功能
-- response_format：响应格式控制
-- image_url：图像输入支持
+- max_tokens: Controls the maximum length of generated text
+- logprobs: Retrieves token probability information
+- n: Generates multiple response candidates
+- stop: Sets conditions for stopping generation
+- function_call: Function calling capability
+- response_format: Response format control
+- image_url: Image input support
 
 ### Claude
-- max_tokens：输出长度限制
-- stop：停止序列设置
-- function_call：工具调用功能
+- max_tokens: Output length limitation
+- stop: Stop sequence configuration
+- function_call: Tool calling functionality
 
 ### Gemini
-- max_tokens：输出长度限制
-- codeExecution：代码执行工具
-- googleSearch：搜索工具
-- response_format：响应格式控制
+- max_tokens: Output length limitation
+- codeExecution: Code execution tool
+- googleSearch: Search tool
+- response_format: Response format control
 
-## API文档参考
+## API Documentation References
 
-- [OpenAI API文档](https://platform.openai.com/docs/api-reference/chat)
-- [Claude API文档](https://docs.anthropic.com/en/api/messages)
-- [Gemini API文档](https://ai.google.dev/gemini-api/docs?hl=zh-cn)
+- [OpenAI API Documentation](https://platform.openai.com/docs/api-reference/chat)
+- [Claude API Documentation](https://docs.anthropic.com/en/api/messages)
+- [Gemini API Documentation](https://ai.google.dev/gemini-api/docs)
 
-
-## 开源协议
+## License
 
 MIT License
