@@ -1,6 +1,10 @@
-# 模型逆向检测工具
+# 🔍 reverse-check：LLM API 逆向检测工具
 
-一个用于检测和对比大语言模型API是否为逆向实现的工具，支持OpenAI、Claude和Gemini等主流模型。
+**项目地址**：[GitHub](https://github.com/star5o/reverse-check) | [网站](https://reverse-check.vercel.app/)
+
+本工具是一个基于是否支持官方参数的逆向检测工具。不能通过本工具检测的API极大概率是逆向的。
+
+目前项目处于初步阶段，暂时需要人工对比响应结果与示例进行判断。
 
 ## 功能特性
 
@@ -29,7 +33,6 @@
 - 前端框架：Vue 3
 - UI组件：Tailwind CSS
 - 构建工具：Vite
-- 国际化：Vue I18n
 
 ## 快速开始
 
@@ -62,34 +65,48 @@ npm run build
 4. 点击「开始检测」按钮
 5. 查看检测结果和对比信息
 
-## 参数说明
+## 参数解释
 
-### OpenAI
-- max_tokens：控制生成文本的最大长度
-- logprobs：获取token的概率信息
-- n：生成多个候选回复
-- stop：设置停止生成的条件
-- function_call：函数调用功能
-- response_format：响应格式控制
-- image_url：图像输入支持
+### OpenAI 参数
 
-### Claude
-- max_tokens：输出长度限制
-- stop：停止序列设置
-- function_call：工具调用功能
+| **参数**         | **解释**                                                                 |
+|------------------|--------------------------------------------------------------------------|
+| **max_tokens**   | 官方API严格遵守token限制（如max_tokens=10），逆向的会忽略限制。     |
+| **logprobs**     | 官方API返回每个token的logprobs信息，逆向的不支持。                     |
+| **n**            | 官方API返回多个回答（如n=2），逆向的只返回一个回答。                   |
+| **stop**         | 官方API遇到停止词立即停止生成，逆向的会忽略停止词输出完整内容。           |
+| **image_url**    | 官方API正确处理图像URL并生成描述，逆向的无法处理图像。        |
+| **function_call**| 官方API返回json格式的函数调用，逆向的不会调用函数。                    |
+| **response_format**| 官方API返回指定格式（如JSON），逆向的只返回字符串。                    |
 
-### Gemini
-- max_tokens：输出长度限制
-- codeExecution：代码执行工具
-- googleSearch：搜索工具
-- response_format：响应格式控制
+### Claude 参数
+
+| **参数**         | **解释**                                                                 |
+|------------------|--------------------------------------------------------------------------|
+| **max_tokens**   | 官方API严格遵守token限制（如max_tokens=10），逆向会忽略限制。     |
+| **stop**         | 官方API遇到停止词立即停止生成，逆向会忽略停止词输出完整内容。           |
+| **function_call**| 官方API返回json格式的函数调用，逆向的不会调用函数。                    |
+
+### Gemini 参数
+
+| **参数**         | **解释**                                                                 |
+|------------------|--------------------------------------------------------------------------|
+| **max_tokens**   | 官方API严格遵守token限制（如max_tokens=10），逆向会忽略限制。     |
+| **codeExecution**| 官方API内置代码执行工具，逆向实现无法执行代码来获取准确结果。        |
+| **googleSearch** | 官方API正确调用谷歌搜索并返回结果，逆向实现无法调用谷歌搜索工具。           |
+| **response_format**| 官方API返回指定格式（如JSON），逆向实现只返回字符串。                    |
+
+
+## TODO
+
+1. 实现自动化判断是否逆向
+2. 实现与Uptime Kuma联动，实现持续监测
 
 ## API文档参考
 
 - [OpenAI API文档](https://platform.openai.com/docs/api-reference/chat)
 - [Claude API文档](https://docs.anthropic.com/en/api/messages)
 - [Gemini API文档](https://ai.google.dev/gemini-api/docs?hl=zh-cn)
-
 
 ## 开源协议
 

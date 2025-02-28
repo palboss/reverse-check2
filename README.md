@@ -1,6 +1,10 @@
-# LLM API Reverse Engineering Detection Tool
+# 🔍 LLM API Reverse Engineering Detection Tool
 
-A tool for detecting and comparing whether Large Language Model APIs are reverse-engineered implementations, supporting major models like OpenAI, Claude, and Gemini.
+**Project Links**: [GitHub](https://github.com/star5o/reverse-check) | [Website](https://reverse-check.vercel.app/)
+
+This LLM API reverse engineering detection tool based on official parameter support. APIs that fail the detection are highly likely to be reverse-engineered.
+
+The project is currently in its initial phase, requiring manual comparison of response results with examples.
 
 ## Features
 
@@ -29,7 +33,6 @@ A tool for detecting and comparing whether Large Language Model APIs are reverse
 - Frontend Framework: Vue 3
 - UI Components: Tailwind CSS
 - Build Tool: Vite
-- Internationalization: Vue I18n
 
 ## Quick Start
 
@@ -64,25 +67,40 @@ npm run build
 
 ## Parameter Details
 
-### OpenAI
-- max_tokens: Controls the maximum length of generated text
-- logprobs: Retrieves token probability information
-- n: Generates multiple response candidates
-- stop: Sets conditions for stopping generation
-- function_call: Function calling capability
-- response_format: Response format control
-- image_url: Image input support
+### OpenAI Parameters
 
-### Claude
-- max_tokens: Output length limitation
-- stop: Stop sequence configuration
-- function_call: Tool calling functionality
+| **Parameter**     | **Explanation**                                                           |
+|------------------|--------------------------------------------------------------------------|
+| **max_tokens**   | Official API strictly follows token limits (e.g., max_tokens=10), reverse-engineered ones ignore limits. |
+| **logprobs**     | Official API returns logprobs information for each token, reverse-engineered ones don't support it. |
+| **n**            | Official API returns multiple answers (e.g., n=2), reverse-engineered ones only return one. |
+| **stop**         | Official API stops generation at stop words, reverse-engineered ones ignore them. |
+| **image_url**    | Official API properly processes image URLs and generates descriptions, reverse-engineered ones can't handle images. |
+| **function_call**| Official API returns JSON-formatted function calls, reverse-engineered ones don't call functions. |
+| **response_format**| Official API returns specified formats (like JSON), reverse-engineered ones only return strings. |
 
-### Gemini
-- max_tokens: Output length limitation
-- codeExecution: Code execution tool
-- googleSearch: Search tool
-- response_format: Response format control
+### Claude Parameters
+
+| **Parameter**     | **Explanation**                                                           |
+|------------------|--------------------------------------------------------------------------|
+| **max_tokens**   | Official API strictly follows token limits (e.g., max_tokens=10), reverse-engineered ones ignore limits. |
+| **stop**         | Official API stops generation at stop words, reverse-engineered ones ignore them. |
+| **function_call**| Official API returns JSON-formatted function calls, reverse-engineered ones don't call functions. |
+
+### Gemini Parameters
+
+| **Parameter**     | **Explanation**                                                           |
+|------------------|--------------------------------------------------------------------------|
+| **max_tokens**   | Official API strictly follows token limits (e.g., max_tokens=10), reverse-engineered ones ignore limits. |
+| **codeExecution**| Official API has built-in code execution tools, reverse-engineered implementations can't execute code. |
+| **googleSearch** | Official API correctly calls Google Search and returns results, reverse-engineered implementations can't use Google Search tool. |
+| **response_format**| Official API returns specified formats (like JSON), reverse-engineered implementations only return strings. |
+
+
+## TODO
+
+1. Implement automated reverse engineering detection
+2. Implement integration with Uptime Kuma for continuous monitoring
 
 ## API Documentation References
 
