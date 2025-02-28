@@ -36,7 +36,8 @@ const i18n = createI18n({
         officialExample: '官方接口返回示例',
         requestResult: '请求结果',
         showBriefResponse: '显示简要响应',
-        showFullResponse: '显示完整响应'
+        showFullResponse: '显示完整响应',
+        apiDocs: 'API文档链接',
       }
     }
   }

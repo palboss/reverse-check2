@@ -34,10 +34,10 @@
 
             <!-- 参数检测说明 -->
             <div v-if="currentDescription" class="bg-blue-50 p-4 rounded-lg border border-blue-200">
-              <h3 class="font-bold text-blue-800 mb-2">{{ currentDescription.title }}</h3>
-              <p class="text-blue-700 mb-2">{{ currentDescription.description }}</p>
+              <h3 class="font-bold text-blue-800 mb-2 break-words">{{ currentDescription.title }}</h3>
+              <p class="text-blue-700 mb-2 break-words">{{ currentDescription.description }}</p>
               <ul class="list-disc list-inside text-blue-600 space-y-1">
-                <li v-for="point in currentDescription.focus_points" :key="point">{{ point }}</li>
+                <li v-for="point in currentDescription.focus_points" :key="point" class="break-words overflow-wrap-anywhere">{{ point }}</li>
               </ul>
             </div>
 
@@ -83,7 +83,22 @@
       <!-- 右侧：检测结果 -->
       <div class="w-1/2 bg-white rounded-lg shadow-lg p-6">
         <h2 class="text-xl font-bold mb-2">{{ t('message.requestResult') }}</h2>
+        <!-- 请求信息展示区块 -->
+        <div v-if="requestInfo" class="mb-4">
+          <h3 class="text-lg font-semibold mb-2">API请求信息</h3>
+          <div class="bg-gray-100 p-4 rounded space-y-2">
+            <div>
+              <span class="font-medium">请求地址：</span>
+              <span class="font-mono">{{ requestInfo.url }}</span>
+            </div>
+            <div>
+              <span class="font-medium">请求体：</span>
+              <pre class="font-mono mt-1">{{ JSON.stringify(requestInfo.body, null, 2) }}</pre>
+            </div>
+          </div>
+        </div>
         <div v-if="result" class="h-[calc(100%-2rem)] overflow-auto">
+          <h3 class="text-lg font-semibold mb-2">API响应信息</h3>
           <pre class="bg-gray-100 p-4 rounded">{{ displayResult }}</pre>
           <div class="flex gap-2 mt-2">
             <button 
@@ -136,25 +151,51 @@
         </div>
       </div>
     </div>
+    
+    <!-- API文档链接 -->
+    <div class="mt-6 bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-xl font-bold mb-4">{{ t('message.apiDocs') }}</h2>
+      <div class="flex flex-wrap gap-4">
+        <a 
+          href="https://platform.openai.com/docs/api-reference/chat" 
+          target="_blank" 
+          class="text-blue-500 hover:text-blue-700 hover:underline"
+        >OpenAI API 文档</a>
+        <a 
+          href="https://docs.anthropic.com/en/api/messages" 
+          target="_blank" 
+          class="text-blue-500 hover:text-blue-700 hover:underline"
+        >Claude API 文档</a>
+        <a 
+          href="https://ai.google.dev/gemini-api/docs?hl=zh-cn" 
+          target="_blank" 
+          class="text-blue-500 hover:text-blue-700 hover:underline"
+        >Gemini API 文档</a>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import examplesData from '../data/examples.json'
 import promptsData from '../data/prompts.json'
 import descriptionsData from '../data/descriptions.json'
 
+const route = useRoute()
+
 const { t } = useI18n()
 const loading = ref(false)
 const result = ref(null)
+const requestInfo = ref(null)
 
 const formState = reactive({
   provider: 'openai',
   testParam: 'max_tokens',
-  model: '',
-  baseUrl: '',
+  model: 'gpt-4o-2024-11-20',
+  baseUrl: 'api.openai.com',
   apiKey: '',
 })
 
@@ -177,20 +218,20 @@ const providerParams = {
     { value: 'logprobs', label: 'logprobs参数' },
     { value: 'n', label: 'n参数' },
     { value: 'stop', label: 'stop参数' },
-    { value: 'tool_choice', label: 'tool_choice参数' },
-    { value: 'tool_function', label: 'tool_function参数' },
+    { value: 'function_call', label: 'function_call参数' },
     { value: 'response_format', label: 'response_format参数' },
-    { value: 'stream', label: 'stream参数' },
+    // { value: 'stream', label: 'stream参数' },
     { value: 'image_url', label: 'image_url参数' }
   ],
   claude: [
     { value: 'max_tokens', label: 'max_tokens参数' },
-    { value: 'stop', label: 'stop参数' },
-    { value: 'tool_choice', label: 'tool_choice参数' }
+    { value: 'stop', label: 'stop_sequence参数' },
+    { value: 'function_call', label: 'tools参数' }
   ],
   gemini: [
     { value: 'max_tokens', label: 'max_tokens参数' },
-    { value: 'codeExecution', label: 'codeExecution参数' },
+    { value: 'codeExecution', label: 'codeExecution工具' },
+    { value: 'googleSearch', label: 'googleSearch工具' },
     { value: 'response_format', label: 'response_format参数' }
   ]
 }
@@ -238,6 +279,24 @@ const handleParamChange = () => {
   // 更新示例显示
 }
 
+// 从URL参数中初始化表单
+onMounted(() => {
+  const { modelProvider, testParams, apiKey, apiBaseUrl, model } = route.query
+  
+  if (modelProvider && providerParams[modelProvider]) {
+    formState.provider = modelProvider
+    handleProviderChange()
+  }
+  
+  if (testParams && availableParams.value.some(param => param.value === testParams)) {
+    formState.testParam = testParams
+  }
+  
+  if (apiKey) formState.apiKey = apiKey
+  if (apiBaseUrl) formState.baseUrl = apiBaseUrl
+  if (model) formState.model = model
+})
+
 // 处理检测请求
 const handleCheck = async () => {
   if (!formState.baseUrl || !formState.apiKey || !formState.model) {
@@ -266,6 +325,12 @@ const handleCheck = async () => {
     // 根据测试参数添加相应的参数
     if (promptConfig.params) {
       Object.assign(requestBody, promptConfig.params)
+    }
+
+    // 设置请求信息
+    requestInfo.value = {
+      url: apiUrl,
+      body: requestBody
     }
 
     const response = await fetch(apiUrl, {
