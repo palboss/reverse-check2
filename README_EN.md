@@ -1,5 +1,7 @@
 # 🔍 LLM API Reverse Engineering Detection Tool
 
+[中文版](./README.md) | English Version
+
 **Project Links**: [GitHub](https://github.com/star5o/reverse-check) | [Website](https://reverse-check.vercel.app/)
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/star5o/Freverse-check&project-name=reverse-check&repository-name=reverse-check)
