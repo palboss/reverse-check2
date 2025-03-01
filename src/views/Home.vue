@@ -171,6 +171,11 @@
           target="_blank" 
           class="text-blue-500 hover:text-blue-700 hover:underline"
         >Gemini API 文档</a>
+        <a 
+          href="https://github.com/star5o/reverse-check" 
+          target="_blank" 
+          class="text-blue-500 hover:text-blue-700 hover:underline"
+        >GitHub 仓库</a>
       </div>
     </div>
   </div>
