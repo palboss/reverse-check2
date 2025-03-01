@@ -1,113 +1,114 @@
-# 🔍 LLM API Reverse Engineering Detection Tool
+# 🔍 reverse-check：LLM API 逆向检测工具
 
-**Project Links**: [GitHub](https://github.com/star5o/reverse-check) | [Website](https://reverse-check.vercel.app/)
+**项目地址**：[GitHub](https://github.com/star5o/reverse-check) | [网站](https://reverse-check.vercel.app/)
 
-This LLM API reverse engineering detection tool based on official parameter support. APIs that fail the detection are highly likely to be reverse-engineered.
+[![使用 Vercel 部署](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/star5o/Freverse-check&project-name=reverse-check&repository-name=reverse-check)
 
-The project is currently in its initial phase, requiring manual comparison of response results with examples.
+本工具是一个基于是否支持官方参数的逆向检测工具。不能通过本工具检测的API极大概率是逆向的。
 
-## Features
+目前项目处于初步阶段，暂时需要人工对比响应结果与示例进行判断。
 
-- 🔍 Multi-Provider API Detection
+## 功能特性
+
+- 🔍 支持多种模型提供商的API检测
   - OpenAI
   - Claude
   - Gemini
 
-- 🛠 Comprehensive Parameter Testing
-  - max_tokens parameter validation
-  - logprobs parameter testing
-  - n parameter verification
-  - stop sequence testing
-  - function_call/tools parameter validation
-  - response_format parameter testing
-  - image input support testing
+- 🛠 丰富的参数测试选项
+  - max_tokens参数检测
+  - logprobs参数检测
+  - n参数检测
+  - stop参数检测
+  - function_call/tools参数检测
+  - response_format参数检测
+  - 图像输入检测
 
-- 📊 Intuitive Results Display
-  - Real-time API request information
-  - Response comparison analysis
-  - Official examples reference
-  - Toggle between concise/complete responses
+- 📊 直观的结果展示
+  - API请求信息实时展示
+  - 响应结果对比分析
+  - 官方示例参考
+  - 简洁/完整响应切换
 
-## Tech Stack
+## 技术栈
 
-- Frontend Framework: Vue 3
-- UI Components: Tailwind CSS
-- Build Tool: Vite
+- 前端框架：Vue 3
+- UI组件：Tailwind CSS
+- 构建工具：Vite
 
-## Quick Start
+## 快速开始
 
-### Install Dependencies
+### 安装依赖
 
 ```bash
 npm install
 ```
 
-### Run Development Server
+### 运行开发服务器
 
 ```bash
 npm run dev
 ```
 
-### Build for Production
+### 构建生产版本
 
 ```bash
 npm run build
 ```
 
-## Usage Guide
+## 使用说明
 
-1. Select a model provider (OpenAI/Claude/Gemini)
-2. Choose parameter types to test
-3. Configure API settings
+1. 选择模型提供商（OpenAI/Claude/Gemini）
+2. 选择要测试的参数类型
+3. 填写API配置信息
    - API Base URL
    - API Key
-   - Model name
-4. Click "Start Detection" button
-5. Review test results and comparison data
+   - 模型名称
+4. 点击「开始检测」按钮
+5. 查看检测结果和对比信息
 
-## Parameter Details
+## 参数详情
 
-### OpenAI Parameters
+### OpenAI 参数
 
-| **Parameter**     | **Explanation**                                                           |
+| **参数**     | **说明**                                                           |
 |------------------|--------------------------------------------------------------------------|
-| **max_tokens**   | Official API strictly follows token limits (e.g., max_tokens=10), reverse-engineered ones ignore limits. |
-| **logprobs**     | Official API returns logprobs information for each token, reverse-engineered ones don't support it. |
-| **n**            | Official API returns multiple answers (e.g., n=2), reverse-engineered ones only return one. |
-| **stop**         | Official API stops generation at stop words, reverse-engineered ones ignore them. |
-| **image_url**    | Official API properly processes image URLs and generates descriptions, reverse-engineered ones can't handle images. |
-| **function_call**| Official API returns JSON-formatted function calls, reverse-engineered ones don't call functions. |
-| **response_format**| Official API returns specified formats (like JSON), reverse-engineered ones only return strings. |
+| **max_tokens**   | 官方API严格遵循token限制（如max_tokens=10），逆向API会忽略限制。 |
+| **logprobs**     | 官方API会返回每个token的logprobs信息，逆向API不支持此功能。 |
+| **n**            | 官方API可以返回多个答案（如n=2），逆向API只返回一个。 |
+| **stop**         | 官方API会在遇到停止词时停止生成，逆向API会忽略停止词。 |
+| **image_url**    | 官方API能正确处理图片URL并生成描述，逆向API无法处理图片。 |
+| **function_call**| 官方API返回JSON格式的函数调用，逆向API不调用函数。 |
+| **response_format**| 官方API返回指定格式（如JSON），逆向API只返回字符串。 |
 
-### Claude Parameters
+### Claude 参数
 
-| **Parameter**     | **Explanation**                                                           |
+| **参数**     | **说明**                                                           |
 |------------------|--------------------------------------------------------------------------|
-| **max_tokens**   | Official API strictly follows token limits (e.g., max_tokens=10), reverse-engineered ones ignore limits. |
-| **stop**         | Official API stops generation at stop words, reverse-engineered ones ignore them. |
-| **function_call**| Official API returns JSON-formatted function calls, reverse-engineered ones don't call functions. |
+| **max_tokens**   | 官方API严格遵循token限制（如max_tokens=10），逆向API会忽略限制。 |
+| **stop**         | 官方API会在遇到停止词时停止生成，逆向API会忽略停止词。 |
+| **function_call**| 官方API返回JSON格式的函数调用，逆向API不调用函数。 |
 
-### Gemini Parameters
+### Gemini 参数
 
-| **Parameter**     | **Explanation**                                                           |
+| **参数**     | **说明**                                                           |
 |------------------|--------------------------------------------------------------------------|
-| **max_tokens**   | Official API strictly follows token limits (e.g., max_tokens=10), reverse-engineered ones ignore limits. |
-| **codeExecution**| Official API has built-in code execution tools, reverse-engineered implementations can't execute code. |
-| **googleSearch** | Official API correctly calls Google Search and returns results, reverse-engineered implementations can't use Google Search tool. |
-| **response_format**| Official API returns specified formats (like JSON), reverse-engineered implementations only return strings. |
+| **max_tokens**   | 官方API严格遵循token限制（如max_tokens=10），逆向API会忽略限制。 |
+| **codeExecution**| 官方API有内置的代码执行工具，逆向实现无法执行代码。 |
+| **googleSearch** | 官方API能正确调用Google搜索并返回结果，逆向实现无法使用Google搜索工具。 |
+| **response_format**| 官方API返回指定格式（如JSON），逆向实现只返回字符串。 |
 
+## 待办事项
 
-## TODO
+1. 实现自动化逆向检测
+2. 实现与Uptime Kuma的集成以进行持续监控
 
-1. Implement automated reverse engineering detection
-2. Implement integration with Uptime Kuma for continuous monitoring
+## API文档参考
 
-## API Documentation References
+- [OpenAI API文档](https://platform.openai.com/docs/api-reference/chat)
+- [Claude API文档](https://docs.anthropic.com/en/api/messages)
+- [Gemini API文档](https://ai.google.dev/gemini-api/docs)
 
-- [OpenAI API Documentation](https://platform.openai.com/docs/api-reference/chat)
-- [Claude API Documentation](https://docs.anthropic.com/en/api/messages)
-- [Gemini API Documentation](https://ai.google.dev/gemini-api/docs)
-
-## License
+## 许可证
 
 MIT License
