@@ -10,14 +10,14 @@
           </div>
         </div>
       </div>
-    
-    <!-- 上半部分：参数配置和响应结果 -->
-    <div class="flex flex-col lg:flex-row gap-8 mb-8">
-      <!-- 左侧：配置表单 -->
-      <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
-        <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">配置参数</h2>
-        <form @submit.prevent="handleCheck" class="space-y-5">
-          <div class="space-y-5">
+      
+      <!-- 上半部分：参数配置和响应结果 -->
+      <div class="flex flex-col lg:flex-row gap-8 mb-8">
+        <!-- 左侧：配置表单 -->
+        <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
+          <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">配置参数</h2>
+          <form @submit.prevent="handleCheck" class="space-y-5">
+            <div class="space-y-5">
             <div class="group">
               <label class="block mb-2 font-medium text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">{{ t('message.modelProvider') }}</label>
               <select 
@@ -110,11 +110,11 @@
         </form>
       </div>
 
-      <!-- 右侧：检测结果 -->
-      <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
-        <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.requestResult') }}</h2>
-        <!-- 请求信息展示区块 -->
-        <div v-if="requestInfo" class="mb-5">
+        <!-- 右侧：检测结果 -->
+        <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
+          <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.requestResult') }}</h2>
+          <!-- 请求信息展示区块 -->
+          <div v-if="requestInfo" class="mb-5">
           <h3 class="text-lg font-semibold mb-3 text-indigo-600">API请求信息</h3>
           <div class="bg-gradient-to-r from-gray-50 to-indigo-50 p-4 rounded-lg border border-indigo-100 shadow-sm space-y-3">
             <div class="flex flex-col">
@@ -146,94 +146,95 @@
       </div>
     </div>
 
-    <!-- 下半部分：示例对比 -->
-    <div class="flex flex-col lg:flex-row gap-8 mb-8">
-      <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
-        <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.reverseExample') }}</h2>
-        <pre class="bg-gradient-to-r from-gray-50 to-indigo-50 p-4 rounded-lg border border-indigo-100 shadow-sm overflow-auto max-h-[40vh] font-mono text-indigo-700">{{ displayReverseExample }}</pre>
-        <div class="flex gap-3 mt-3">
-          <button 
-            @click="toggleReverseView('full')"
-            class="btn-secondary text-sm py-1 px-3">
-            {{ t('message.showFullResponse') }}
-          </button>
-          <button 
-            @click="toggleReverseView('brief')"
-            class="btn-secondary text-sm py-1 px-3">
-            {{ t('message.showBriefResponse') }}
-          </button>
+      <!-- 下半部分：示例对比 -->
+      <div class="flex flex-col lg:flex-row gap-8 mb-8">
+        <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
+          <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.reverseExample') }}</h2>
+          <pre class="bg-gradient-to-r from-gray-50 to-indigo-50 p-4 rounded-lg border border-indigo-100 shadow-sm overflow-auto max-h-[40vh] font-mono text-indigo-700">{{ displayReverseExample }}</pre>
+          <div class="flex gap-3 mt-3">
+            <button 
+              @click="toggleReverseView('full')"
+              class="btn-secondary text-sm py-1 px-3">
+              {{ t('message.showFullResponse') }}
+            </button>
+            <button 
+              @click="toggleReverseView('brief')"
+              class="btn-secondary text-sm py-1 px-3">
+              {{ t('message.showBriefResponse') }}
+            </button>
+          </div>
+        </div>
+        <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
+          <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.officialExample') }}</h2>
+          <pre class="bg-gradient-to-r from-gray-50 to-indigo-50 p-4 rounded-lg border border-indigo-100 shadow-sm overflow-auto max-h-[40vh] font-mono text-indigo-700">{{ displayOfficialExample }}</pre>
+          <div class="flex gap-3 mt-3">
+            <button 
+              @click="toggleOfficialView('full')"
+              class="btn-secondary text-sm py-1 px-3">
+              {{ t('message.showFullResponse') }}
+            </button>
+            <button 
+              @click="toggleOfficialView('brief')"
+              class="btn-secondary text-sm py-1 px-3">
+              {{ t('message.showBriefResponse') }}
+            </button>
+          </div>
         </div>
       </div>
-      <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
-        <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.officialExample') }}</h2>
-        <pre class="bg-gradient-to-r from-gray-50 to-indigo-50 p-4 rounded-lg border border-indigo-100 shadow-sm overflow-auto max-h-[40vh] font-mono text-indigo-700">{{ displayOfficialExample }}</pre>
-        <div class="flex gap-3 mt-3">
-          <button 
-            @click="toggleOfficialView('full')"
-            class="btn-secondary text-sm py-1 px-3">
-            {{ t('message.showFullResponse') }}
-          </button>
-          <button 
-            @click="toggleOfficialView('brief')"
-            class="btn-secondary text-sm py-1 px-3">
-            {{ t('message.showBriefResponse') }}
-          </button>
+      
+      <!-- API文档链接 -->
+      <div class="card p-6 transition-all duration-300">
+        <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.apiDocs') }}</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <a 
+            href="https://platform.openai.com/docs/api-reference/chat" 
+            target="_blank" 
+            class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
+          >
+            <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">OpenAI API 文档</span>
+          </a>
+          <a 
+            href="https://docs.anthropic.com/en/api/messages" 
+            target="_blank" 
+            class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
+          >
+            <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">Claude API 文档</span>
+          </a>
+          <a 
+            href="https://ai.google.dev/gemini-api/docs?hl=zh-cn" 
+            target="_blank" 
+            class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
+          >
+            <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">Gemini API 文档</span>
+          </a>
+          <a 
+            href="https://github.com/star5o/reverse-check" 
+            target="_blank" 
+            class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
+          >
+            <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </div>
+            <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">GitHub 仓库</span>
+          </a>
         </div>
-      </div>
-    </div>
-    
-    <!-- API文档链接 -->
-    <div class="card p-6 transition-all duration-300">
-      <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.apiDocs') }}</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <a 
-          href="https://platform.openai.com/docs/api-reference/chat" 
-          target="_blank" 
-          class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
-        >
-          <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </div>
-          <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">OpenAI API 文档</span>
-        </a>
-        <a 
-          href="https://docs.anthropic.com/en/api/messages" 
-          target="_blank" 
-          class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
-        >
-          <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </div>
-          <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">Claude API 文档</span>
-        </a>
-        <a 
-          href="https://ai.google.dev/gemini-api/docs?hl=zh-cn" 
-          target="_blank" 
-          class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
-        >
-          <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </div>
-          <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">Gemini API 文档</span>
-        </a>
-        <a 
-          href="https://github.com/star5o/reverse-check" 
-          target="_blank" 
-          class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
-        >
-          <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-            </svg>
-          </div>
-          <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">GitHub 仓库</span>
-        </a>
       </div>
     </div>
   </div>
