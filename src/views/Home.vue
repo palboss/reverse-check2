@@ -425,12 +425,25 @@ const handleCheck = async () => {
 
     if (!response.ok) {
       const errorData = await response.json()
-      throw new Error(errorData.error?.message || '请求失败')
+      const error = new Error(errorData.error?.message || '请求失败')
+      error.response = response.clone() // 保存响应对象以便后续处理
+      error.statusCode = response.status
+      error.statusText = response.statusText
+      throw error
     }
 
     result.value = await response.json()
   } catch (error) {
-    alert(error.message)
+    // 捕获错误响应并显示在结果区域，而不是弹窗
+    if (error.response) {
+      try {
+        result.value = await error.response.json();
+      } catch {
+        result.value = { error: { message: error.message } };
+      }
+    } else {
+      result.value = { error: { message: error.message } };
+    }
   } finally {
     loading.value = false
   }
