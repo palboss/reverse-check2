@@ -1,31 +1,41 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-6 text-center">{{ t('message.title') }}</h1>
+  <div class="min-h-screen bg-gradient-to-b from-indigo-50 to-white py-12">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex justify-center mb-8">
+        <div class="bg-gradient-to-r from-indigo-600 to-sky-500 p-1 rounded-xl shadow-lg">
+          <div class="bg-white px-8 py-4 rounded-xl">
+            <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-sky-500">
+              {{ t('message.title') }}
+            </h1>
+          </div>
+        </div>
+      </div>
     
     <!-- 上半部分：参数配置和响应结果 -->
-    <div class="flex gap-6 mb-6">
+    <div class="flex flex-col lg:flex-row gap-8 mb-8">
       <!-- 左侧：配置表单 -->
-      <div class="w-1/2 bg-white rounded-lg shadow-lg p-6">
-        <form @submit.prevent="handleCheck" class="space-y-4">
-          <div class="space-y-4">
-            <div>
-              <label class="block mb-1">{{ t('message.modelProvider') }}</label>
+      <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
+        <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">配置参数</h2>
+        <form @submit.prevent="handleCheck" class="space-y-5">
+          <div class="space-y-5">
+            <div class="group">
+              <label class="block mb-2 font-medium text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">{{ t('message.modelProvider') }}</label>
               <select 
                 v-model="formState.provider" 
                 @change="handleProviderChange"
-                class="w-full border p-2 rounded">
+                class="select-field">
                 <option value="openai">OpenAI</option>
                 <option value="claude">Claude</option>
                 <option value="gemini">Gemini</option>
               </select>
             </div>
             
-            <div>
-              <label class="block mb-1">{{ t('message.testParams') }}</label>
+            <div class="group">
+              <label class="block mb-2 font-medium text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">{{ t('message.testParams') }}</label>
               <select 
                 v-model="formState.testParam" 
                 @change="handleParamChange"
-                class="w-full border p-2 rounded">
+                class="select-field">
                 <option v-for="param in availableParams" :key="param.value" :value="param.value">
                   {{ param.label }}
                 </option>
@@ -33,47 +43,67 @@
             </div>
 
             <!-- 参数检测说明 -->
-            <div v-if="currentDescription" class="bg-blue-50 p-4 rounded-lg border border-blue-200">
-              <h3 class="font-bold text-blue-800 mb-2 break-words">{{ currentDescription.title }}</h3>
-              <p class="text-blue-700 mb-2 break-words">{{ currentDescription.description }}</p>
-              <ul class="list-disc list-inside text-blue-600 space-y-1">
-                <li v-for="point in currentDescription.focus_points" :key="point" class="break-words overflow-wrap-anywhere">{{ point }}</li>
+            <div v-if="currentDescription" class="bg-gradient-to-r from-indigo-50 to-sky-50 p-5 rounded-xl border border-indigo-100 shadow-sm">
+              <h3 class="font-bold text-indigo-800 mb-3 break-words text-lg">{{ currentDescription.title }}</h3>
+              <p class="text-indigo-700 mb-3 break-words">{{ currentDescription.description }}</p>
+              <ul class="space-y-2">
+                <li v-for="point in currentDescription.focus_points" :key="point" class="flex items-start break-words">
+                  <span class="inline-block mr-2 text-indigo-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                  <span class="text-indigo-600">{{ point }}</span>
+                </li>
               </ul>
             </div>
 
-            <div>
-              <label class="block mb-1">{{ t('message.model') }}</label>
+            <div class="group">
+              <label class="block mb-2 font-medium text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">{{ t('message.model') }}</label>
               <input 
                 type="text" 
                 v-model="formState.model" 
-                class="w-full border p-2 rounded"
+                class="input-field"
                 :placeholder="t('message.modelPlaceholder')" />
             </div>
 
-            <div>
-              <label class="block mb-1">{{ t('message.apiBaseUrl') }}</label>
+            <div class="group">
+              <label class="block mb-2 font-medium text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">{{ t('message.apiBaseUrl') }}</label>
               <input 
                 type="text" 
                 v-model="formState.baseUrl" 
-                class="w-full border p-2 rounded"
+                class="input-field"
                 :placeholder="t('message.apiBaseUrlPlaceholder')" />
             </div>
 
-            <div>
-              <label class="block mb-1">{{ t('message.apiKey') }}</label>
-              <input 
-                type="password" 
-                v-model="formState.apiKey" 
-                class="w-full border p-2 rounded"
-                :placeholder="t('message.apiKeyPlaceholder')" />
+            <div class="group">
+              <label class="block mb-2 font-medium text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">{{ t('message.apiKey') }}</label>
+              <div class="relative">
+                <input 
+                  type="password" 
+                  v-model="formState.apiKey" 
+                  class="input-field pr-10"
+                  :placeholder="t('message.apiKeyPlaceholder')" />
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-indigo-600 cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v-1l1-1 1-1-.257-.257A6 6 0 1118 8zm-6-4a1 1 0 100 2h5a1 1 0 100-2h-5z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </div>
             </div>
 
-            <div class="text-center">
+            <div class="text-center pt-2">
               <button 
                 type="submit" 
-                class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+                class="btn-primary w-full sm:w-auto px-8 py-3 text-base font-medium shadow-md"
                 :disabled="loading">
-                {{ t('message.startCheck') }}
+                <span class="flex items-center justify-center">
+                  <svg v-if="loading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  {{ t('message.startCheck') }}
+                </span>
               </button>
             </div>
           </div>
@@ -81,34 +111,34 @@
       </div>
 
       <!-- 右侧：检测结果 -->
-      <div class="w-1/2 bg-white rounded-lg shadow-lg p-6">
-        <h2 class="text-xl font-bold mb-2">{{ t('message.requestResult') }}</h2>
+      <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
+        <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.requestResult') }}</h2>
         <!-- 请求信息展示区块 -->
-        <div v-if="requestInfo" class="mb-4">
-          <h3 class="text-lg font-semibold mb-2">API请求信息</h3>
-          <div class="bg-gray-100 p-4 rounded space-y-2">
-            <div>
-              <span class="font-medium">请求地址：</span>
-              <span class="font-mono">{{ requestInfo.url }}</span>
+        <div v-if="requestInfo" class="mb-5">
+          <h3 class="text-lg font-semibold mb-3 text-indigo-600">API请求信息</h3>
+          <div class="bg-gradient-to-r from-gray-50 to-indigo-50 p-4 rounded-lg border border-indigo-100 shadow-sm space-y-3">
+            <div class="flex flex-col">
+              <span class="font-medium text-gray-700 mb-1">请求地址：</span>
+              <span class="font-mono text-indigo-600 bg-white p-2 rounded-md border border-indigo-100 break-all">{{ requestInfo.url }}</span>
             </div>
-            <div>
-              <span class="font-medium">请求体：</span>
-              <pre class="font-mono mt-1">{{ JSON.stringify(requestInfo.body, null, 2) }}</pre>
+            <div class="flex flex-col">
+              <span class="font-medium text-gray-700 mb-1">请求体：</span>
+              <pre class="font-mono mt-1 bg-white p-3 rounded-md border border-indigo-100 overflow-auto max-h-[200px] text-indigo-600">{{ JSON.stringify(requestInfo.body, null, 2) }}</pre>
             </div>
           </div>
         </div>
-        <div v-if="result" class="h-[calc(100%-2rem)] overflow-auto">
-          <h3 class="text-lg font-semibold mb-2">API响应信息</h3>
-          <pre class="bg-gray-100 p-4 rounded">{{ displayResult }}</pre>
-          <div class="flex gap-2 mt-2">
+        <div v-if="result" class="overflow-auto">
+          <h3 class="text-lg font-semibold mb-3 text-indigo-600">API响应信息</h3>
+          <pre class="bg-gradient-to-r from-gray-50 to-indigo-50 p-4 rounded-lg border border-indigo-100 shadow-sm overflow-auto max-h-[300px] font-mono text-indigo-700">{{ displayResult }}</pre>
+          <div class="flex gap-3 mt-3">
             <button 
               @click="toggleResultView('full')"
-              class="text-blue-500 hover:text-blue-700 text-sm">
+              class="btn-secondary text-sm py-1 px-3">
               {{ t('message.showFullResponse') }}
             </button>
             <button 
               @click="toggleResultView('brief')"
-              class="text-blue-500 hover:text-blue-700 text-sm">
+              class="btn-secondary text-sm py-1 px-3">
               {{ t('message.showBriefResponse') }}
             </button>
           </div>
@@ -117,35 +147,35 @@
     </div>
 
     <!-- 下半部分：示例对比 -->
-    <div class="flex gap-6">
-      <div class="w-1/2 bg-white rounded-lg shadow-lg p-6">
-        <h2 class="text-xl font-bold mb-2">{{ t('message.reverseExample') }}</h2>
-        <pre class="bg-gray-100 p-4 rounded overflow-auto max-h-[40vh]">{{ displayReverseExample }}</pre>
-        <div class="flex gap-2 mt-2">
+    <div class="flex flex-col lg:flex-row gap-8 mb-8">
+      <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
+        <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.reverseExample') }}</h2>
+        <pre class="bg-gradient-to-r from-gray-50 to-indigo-50 p-4 rounded-lg border border-indigo-100 shadow-sm overflow-auto max-h-[40vh] font-mono text-indigo-700">{{ displayReverseExample }}</pre>
+        <div class="flex gap-3 mt-3">
           <button 
             @click="toggleReverseView('full')"
-            class="text-blue-500 hover:text-blue-700 text-sm">
+            class="btn-secondary text-sm py-1 px-3">
             {{ t('message.showFullResponse') }}
           </button>
           <button 
             @click="toggleReverseView('brief')"
-            class="text-blue-500 hover:text-blue-700 text-sm">
+            class="btn-secondary text-sm py-1 px-3">
             {{ t('message.showBriefResponse') }}
           </button>
         </div>
       </div>
-      <div class="w-1/2 bg-white rounded-lg shadow-lg p-6">
-        <h2 class="text-xl font-bold mb-2">{{ t('message.officialExample') }}</h2>
-        <pre class="bg-gray-100 p-4 rounded overflow-auto max-h-[40vh]">{{ displayOfficialExample }}</pre>
-        <div class="flex gap-2 mt-2">
+      <div class="w-full lg:w-1/2 card p-6 transition-all duration-300">
+        <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.officialExample') }}</h2>
+        <pre class="bg-gradient-to-r from-gray-50 to-indigo-50 p-4 rounded-lg border border-indigo-100 shadow-sm overflow-auto max-h-[40vh] font-mono text-indigo-700">{{ displayOfficialExample }}</pre>
+        <div class="flex gap-3 mt-3">
           <button 
             @click="toggleOfficialView('full')"
-            class="text-blue-500 hover:text-blue-700 text-sm">
+            class="btn-secondary text-sm py-1 px-3">
             {{ t('message.showFullResponse') }}
           </button>
           <button 
             @click="toggleOfficialView('brief')"
-            class="text-blue-500 hover:text-blue-700 text-sm">
+            class="btn-secondary text-sm py-1 px-3">
             {{ t('message.showBriefResponse') }}
           </button>
         </div>
@@ -153,29 +183,57 @@
     </div>
     
     <!-- API文档链接 -->
-    <div class="mt-6 bg-white rounded-lg shadow-lg p-6">
-      <h2 class="text-xl font-bold mb-4">{{ t('message.apiDocs') }}</h2>
-      <div class="flex flex-wrap gap-4">
+    <div class="card p-6 transition-all duration-300">
+      <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">{{ t('message.apiDocs') }}</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <a 
           href="https://platform.openai.com/docs/api-reference/chat" 
           target="_blank" 
-          class="text-blue-500 hover:text-blue-700 hover:underline"
-        >OpenAI API 文档</a>
+          class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
+        >
+          <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">OpenAI API 文档</span>
+        </a>
         <a 
           href="https://docs.anthropic.com/en/api/messages" 
           target="_blank" 
-          class="text-blue-500 hover:text-blue-700 hover:underline"
-        >Claude API 文档</a>
+          class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
+        >
+          <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">Claude API 文档</span>
+        </a>
         <a 
           href="https://ai.google.dev/gemini-api/docs?hl=zh-cn" 
           target="_blank" 
-          class="text-blue-500 hover:text-blue-700 hover:underline"
-        >Gemini API 文档</a>
+          class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
+        >
+          <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">Gemini API 文档</span>
+        </a>
         <a 
           href="https://github.com/star5o/reverse-check" 
           target="_blank" 
-          class="text-blue-500 hover:text-blue-700 hover:underline"
-        >GitHub 仓库</a>
+          class="flex items-center p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 hover:shadow-md transition-all duration-300 group"
+        >
+          <div class="mr-3 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          </div>
+          <span class="text-gray-700 group-hover:text-indigo-700 font-medium transition-colors duration-200">GitHub 仓库</span>
+        </a>
       </div>
     </div>
   </div>
