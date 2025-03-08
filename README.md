@@ -4,7 +4,8 @@
 
 **项目地址**：[GitHub](https://github.com/star5o/reverse-check) | [网站1（vercel域名）](https://reverse-check.vercel.app/) | [网站2（我的域名）](https://reverse-check.no-reverse-api.com)
 
-**Vercel一键部署**：[![使用 Vercel 部署](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/star5o/Freverse-check&project-name=reverse-check&repository-name=reverse-check)
+**Vercel一键部署**：
+[![使用 Vercel 部署](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/palboss/reverse-check2)
 
 本工具是一个基于是否支持官方参数的逆向检测工具。不能通过本工具检测的API极大概率是逆向的。
 
